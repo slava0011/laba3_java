@@ -272,5 +272,25 @@ public class MainFrame extends JFrame {
             }
         });
 
+        // Поместить созданные кнопки в контейнер
+        Box hboxButtons = Box.createHorizontalBox();
+        hboxButtons.setBorder(BorderFactory.createBevelBorder(1));
+        hboxButtons.add(Box.createHorizontalGlue());
+        hboxButtons.add(buttonCalc);
+        hboxButtons.add(Box.createHorizontalStrut(30));
+        hboxButtons.add(buttonReset);
+        hboxButtons.add(Box.createHorizontalGlue());
+        // Установить предпочтительный размер области равным удвоенному минимальному, чтобы при
+        // компоновке окна область совсем не сдавили
+        hboxButtons.setPreferredSize(new Dimension(new
+                Double(hboxButtons.getMaximumSize().getWidth()).intValue(), new
+                Double(hboxButtons.getMinimumSize().getHeight()).intValue() * 2));
+        // Разместить контейнер с кнопками в нижней (южной) области граничной компоновки
+        getContentPane().add(hboxButtons, BorderLayout.NORTH);
+        // Область для вывода результата пока что пустая
+        hBoxResult = Box.createHorizontalBox();
+        hBoxResult.add(new JPanel());
+        // Установить контейнер hBoxResult в главной (центральной) области граничной компоновки
+        getContentPane().add(hBoxResult, BorderLayout.CENTER);
     }
 }
