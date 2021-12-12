@@ -48,4 +48,33 @@ public class GornerTableCellRenderer implements TableCellRenderer {
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
     }
 
+    public Component getTableCellRendererComponent(JTable table,
+                                                   Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+// Преобразовать type в строку с помощью форматировщика
+        String formattedType = formatter.format(value);
+// Установить текст надписи равным строковому представлению числа
+        label.setText(formattedType);
+        if (col==1 && needle!=null && needle.equals(formattedType)) {
+// Номер столбца = 1 (т.е. второй столбец) + иголка не null
+// (значит что-то ищем) +
+// значение иголки совпадает со значением ячейки таблицы -
+// окрасить задний фон панели в красный цвет
+            panel.setBackground(Color.RED);
+        } else if (col==1 && SameSign(formattedType)) {
+            panel.setBackground(Color.GREEN);
+        } else {
+// Иначе - в обычный белый
+            panel.setBackground(Color.WHITE);
+        }
+        if (col==0 && needle!=null && needle.equals(formattedType)) {
+            panel.setBackground(Color.RED);
+        }
+        return panel;
+    }
+    public void setNeedle(String needle) {
+        this.needle = needle;
+    }
+    public void setSignX(char Sign) {
+        this.Sign = Sign;
+    }
 }
