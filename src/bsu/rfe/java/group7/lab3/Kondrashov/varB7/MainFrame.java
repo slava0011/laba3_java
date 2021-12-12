@@ -35,4 +35,51 @@ public class MainFrame extends JFrame {
             GornerTableCellRenderer();
     // Модель данных с результатами вычислений
     private GornerTableModel data;
+
+    public MainFrame(Double[] coefficients) {
+        // Обязательный вызов конструктора предка
+        super("Табулирование многочлена на отрезке по схеме Горнера");
+        // Запомнить во внутреннем поле переданные коэффициенты
+        this.coefficients = coefficients;
+        // Установить размеры окна
+        setSize(WIDTH, HEIGHT);
+        Toolkit kit = Toolkit.getDefaultToolkit();
+        // Отцентрировать окно приложения на экране
+        setLocation((kit.getScreenSize().width - WIDTH) / 2,
+                (kit.getScreenSize().height - HEIGHT) / 2);
+        // Создать меню
+        JMenuBar menuBar = new JMenuBar();
+        // Установить меню в качестве главного меню приложения
+        setJMenuBar(menuBar);
+        // Добавить в меню пункт меню "Файл"
+        JMenu fileMenu = new JMenu("Файл");
+        // Добавить его в главное меню
+        menuBar.add(fileMenu);
+        // Создать пункт меню "Таблица"
+        JMenu tableMenu = new JMenu("Таблица");
+        // Добавить его в главное меню
+        menuBar.add(tableMenu);
+        // Создать пункт меню "Справка"
+        JMenu referenceMenu = new JMenu("Справка");
+        // Добавить его в главное меню
+        menuBar.add(referenceMenu);
+        // Создать новое "действие" по сохранению в текстовый файл
+        Action saveToTextAction = new AbstractAction("Сохранить в текстовый файл") {
+            public void actionPerformed(ActionEvent event) {
+                if (fileChooser == null) {
+                    // Если экземпляр диалогового окна "Открыть файл" ещѐ не создан,
+                    // то создать его
+                    fileChooser = new JFileChooser();
+                    // и инициализировать текущей директорией
+                    fileChooser.setCurrentDirectory(new File("."));
+                }
+                // Показать диалоговое окно
+                if (fileChooser.showSaveDialog(MainFrame.this) ==
+                        JFileChooser.APPROVE_OPTION)
+                    // Если результат его показа успешный,
+                    // сохранить данные в текстовый файл
+                    saveToTextFile(fileChooser.getSelectedFile());
+            }
+        };
+    }
 }
