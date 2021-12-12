@@ -312,4 +312,33 @@ public class MainFrame extends JFrame {
         }
     }
 
+    protected void saveToTextFile(File selectedFile) {
+        try {
+            // Создать новый символьный поток вывода, направленный в указанный файл
+            PrintStream out = new PrintStream(selectedFile);
+            // Записать в поток вывода заголовочные сведения
+            out.println("Результаты табулирования многочлена по схеме Горнера");
+            out.print("Многочлен: ");
+            for (int i = 0; i < coefficients.length; i++) {
+                out.print(coefficients[i] + "*X^" +
+                        (coefficients.length - i - 1));
+                if (i != coefficients.length - 1)
+                    out.print(" + ");
+            }
+            out.println("");
+            out.println("Интервал от " + data.getFrom() + " до " +
+                    data.getTo() + " с шагом " + data.getStep());
+            out.println("====================================================");
+            // Записать в поток вывода значения в точках
+            for (int i = 0; i < data.getRowCount(); i++) {
+                out.println("Значение в точке " + data.getValueAt(i, 0)
+                        + " равно " + data.getValueAt(i, 1));
+            }
+            // Закрыть поток
+            out.close();
+        } catch (FileNotFoundException e) {
+            // Исключительную ситуацию "ФайлНеНайден" можно не
+            // обрабатывать, так как мы файл создаѐм, а не открываем
+        }
+    }
 }
