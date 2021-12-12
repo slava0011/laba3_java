@@ -65,6 +65,44 @@ public class GornerTableModel extends AbstractTableModel {
             }
             default: return 0.0;
         }
+    }
 
+    public static Boolean SequentialSeries(double number) {
+        Boolean itog = false;
+        StringBuffer numberIntStringBuffer = new StringBuffer(String.valueOf(number));
+        String numberStrInt = numberIntStringBuffer.toString();
+        char[] resultInt = numberStrInt.toCharArray();
+
+        int score = 0;
+        for(int i = 0; i < resultInt.length; i++) {
+            if((i + 1 <= resultInt.length - 1)){
+                if((resultInt[i]==resultInt[i+1] - 1)) score++;
+                else score = 0;
+            }
+            if(score >= 2) itog = true;
+        }
+        return itog;
+    }
+
+    public String getColumnName(int col) {
+        switch (col) {
+            case 0:
+// Название 1-го столбца
+                return "Значение X";
+            case 1:
+// Название 2-го столбца
+                return "Значение многочлена";
+// Название 3-го столбца
+            case 2:
+                return "Целая часть последовательный ряд?";
+            default:
+                return "";
+        }
+    }
+    public Class<?> getColumnClass(int col) {
+        // В третьем столбце находятся значения типа Boolean
+        if (col == 2) return Boolean.class;
+            // В остальных типа Double
+        else return Double.class;
     }
 }
