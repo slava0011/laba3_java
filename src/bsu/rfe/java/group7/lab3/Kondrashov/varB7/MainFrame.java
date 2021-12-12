@@ -107,5 +107,23 @@ public class MainFrame extends JFrame {
             }
         };
 
+        // Добавить соответствующий пункт подменю в меню "Файл"
+        saveToGraphicsMenuItem = fileMenu.add(saveToGraphicsAction);
+        // По умолчанию пункт меню является недоступным(данных ещѐ нет)
+        saveToGraphicsMenuItem.setEnabled(false);
+        // Создать новое действие по поиску значений многочлена
+        Action searchValueAction = new AbstractAction("Найти значение многочлена") {
+            public void actionPerformed(ActionEvent event) {
+                // Запросить пользователя ввести искомую строку
+                String value =
+                        JOptionPane.showInputDialog(MainFrame.this, "Введите значение для поиска",
+                                "Поиск значения", JOptionPane.QUESTION_MESSAGE);
+                // Установить введенное значение в качестве иголки
+                renderer.setNeedle(value);
+                // Обновить таблицу
+                getContentPane().repaint();
+            }
+        };
+
     }
 }
