@@ -81,5 +81,31 @@ public class MainFrame extends JFrame {
                     saveToTextFile(fileChooser.getSelectedFile());
             }
         };
+
+        // Добавить соответствующий пункт подменю в меню "Файл"
+        saveToTextMenuItem = fileMenu.add(saveToTextAction);
+        // По умолчанию пункт меню является недоступным (данных ещѐ нет)
+        saveToTextMenuItem.setEnabled(false);
+        // Создать новое "действие" по сохранению в текстовый файл
+        Action saveToGraphicsAction = new AbstractAction("Сохранить данные для построения графика") {
+            public void actionPerformed(ActionEvent event) {
+                if (fileChooser == null) {
+                    // Если экземпляр диалогового окна
+                    // "Открыть файл" ещѐ не создан,
+                    // то создать его
+                    fileChooser = new JFileChooser();
+                    // и инициализировать текущей директорией
+                    fileChooser.setCurrentDirectory(new File("."));
+                }
+                // Показать диалоговое окно
+                if (fileChooser.showSaveDialog(MainFrame.this) ==
+                        JFileChooser.APPROVE_OPTION) ;
+                // Если результат его показа успешный,
+                // сохранить данные в двоичный файл
+                saveToGraphicsFile(
+                        fileChooser.getSelectedFile());
+            }
+        };
+
     }
 }
